@@ -19,7 +19,7 @@ const RentalForm = ({ filmId }) => {
         }
 
         const parsedCustomerId = parseInt(customerId, 10);
-        const parsedFilmId = parseInt(filmId, 10); 
+        const parsedFilmId = parseInt(filmId, 10);
 
         if (isNaN(parsedCustomerId) || isNaN(parsedFilmId)) {
             setError('Customer ID and Film ID must be numbers');
