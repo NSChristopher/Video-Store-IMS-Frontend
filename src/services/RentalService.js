@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const API_URL = 'http://127.0.0.1:8000/';
 
@@ -16,14 +17,20 @@ export const createRental = (filmId, customerId, staffId = 1) => {
     }
 }
 
-export const returnRental = (customer_id, rentalId) => {
+export const returnRental = async (customer_id, rentalId) => {
     try {
-        return axios.put(`${API_URL}customer/${customer_id}/return/`,
+        const response = await axios.put(`${API_URL}customer/${customer_id}/return/`,
             {
                 rental_id: rentalId
             });
+        toast.success(response.data.message);
+        return response.data;
     } catch (error) {
-        console.error("Failed to return rental.", error);
-        throw new Error("Server connection error");
+        let errorMessage = "Failed to return rental due to a server connection error.";
+        if (error.response && error.response.data && error.response.data.message) {
+            errorMessage = error.response.data.message;
+        }
+        toast.error(errorMessage);
+        throw error;
     }
 }

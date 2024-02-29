@@ -9,6 +9,8 @@ import Customers from './components/Customers';
 import Customer from './components/Customer';
 import CustomerCreate from './components/CustomerCreate';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
@@ -26,6 +28,7 @@ function App() {
                             <Route path="/customer/create" element={<CustomerCreate />} />
                         </Routes>
                     </div>
+                <ToastContainer />
             </div>
         </Router>
     );

@@ -11,19 +11,17 @@ const Customer = () => {
     const [validated, setValidated] = useState(false);
 
     useEffect(() => {
-        getCustomer(customer_id).then(customerData => setCustomer(customerData[0])).catch(() => setCustomer({}));
+        getCustomer(customer_id).then(customerData => setCustomer(customerData[0])).catch(() => {});
     }, [customer_id]);
 
     const handleCustomerUpdate = (event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
-        event.preventDefault();
         event.stopPropagation();
         }
         else {
-            updateCustomer(customer_id, customer.first_name, customer.last_name, customer.email).then(() => 
-            alert('Customer updated successfully')).catch(() => // TODO replace with better error messaging
-            alert('Error updating customer')); // TODO replace with better error messaging
+            updateCustomer(customer_id, customer.first_name, customer.last_name, customer.email).catch(() => {});
         }
         setValidated(true);
     };
@@ -57,7 +55,8 @@ const Customer = () => {
                     <Form.Group className="mb-3" controlId="formFirstName">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control 
-                            type="text" 
+                            type="text"
+                            maxLength={25}
                             placeholder="First Name" 
                             value={customer.first_name} 
                             onChange={handleFirstNameChange} 
@@ -72,7 +71,8 @@ const Customer = () => {
                     <Form.Group className="mb-3" controlId="formLastName">
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control 
-                            type="text" 
+                            type="text"
+                            maxLength={25}
                             placeholder="Last Name" 
                             value={customer.last_name} 
                             onChange={handleLastNameChange} 
@@ -111,5 +111,3 @@ const Customer = () => {
 };
 
 export default Customer;
-
-

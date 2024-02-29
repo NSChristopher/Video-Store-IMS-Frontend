@@ -18,10 +18,8 @@ const CustomerCreate = () => {
         }
         else {
             createCustomer(customer.first_name, customer.last_name, customer.email).then(() => {
-                alert('Customer created successfully') // TODO replace with better error messaging
-                navigate('/customers')
-            }).catch(() => 
-            alert('Error creating customer')); // TODO replace with better error messaging
+                navigate('/customers');
+            });
         }
         setValidated(true);
     };
@@ -55,7 +53,8 @@ const CustomerCreate = () => {
                     <Form.Group className="mb-3" controlId="formFirstName">
                         <Form.Label>First Name</Form.Label>
                         <Form.Control 
-                            type="text" 
+                            type="text"
+                            maxLength={25}
                             placeholder="First Name" 
                             value={customer.first_name} 
                             onChange={handleFirstNameChange} 
@@ -70,7 +69,8 @@ const CustomerCreate = () => {
                     <Form.Group className="mb-3" controlId="formLastName">
                         <Form.Label>Last Name</Form.Label>
                         <Form.Control 
-                            type="text" 
+                            type="text"
+                            maxLength={25}
                             placeholder="Last Name" 
                             value={customer.last_name} 
                             onChange={handleLastNameChange} 

@@ -10,18 +10,12 @@ const CustomerRentalHistory = ({ customer_id }) => {
     const [updateTrigger, setUpdateTrigger] = useState(0);
 
     const fetchRentals = useCallback(async () => {
-        const rentals = await getCustomerRentals(customer_id).catch(() => {
-            alert('Error fetching rentals'); // TODO replace with better error messaging
-            return [];
-        });
+        const rentals = await getCustomerRentals(customer_id).catch(() => { return []; });
         setRentals(rentals);
     }, [customer_id]);
 
     const fetchRentalHistory = useCallback(async () => {
-        const history = await getCustomerRentalHistory(customer_id).catch(() => {
-            alert('Error fetching rental history'); // TODO replace with better error messaging
-            return [];
-        });
+        const history = await getCustomerRentalHistory(customer_id).catch(() => { return []; });
         setRentalHistory(history);
     }, [customer_id]);
 
@@ -31,9 +25,7 @@ const CustomerRentalHistory = ({ customer_id }) => {
     }, [customer_id, updateTrigger, fetchRentals, fetchRentalHistory]);
 
     const returnCustomerRental = async (rentalId) => {
-        await returnRental(customer_id, rentalId).catch(() => {
-            alert('Error returning rental'); // TODO replace with better error messaging
-        });
+        await returnRental(customer_id, rentalId).catch(() => {});
         setUpdateTrigger(updateTrigger + 1);
     }
 

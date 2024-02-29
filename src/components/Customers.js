@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ButtonGroup, ToggleButton, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getCustomers, updateCustomerStatus } from '../services/CustomerService';
+import { toast } from 'react-toastify';
 
 const Customers = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,28 +20,24 @@ const Customers = () => {
     setCustomers([]);
 
     const searchedCustomers = await getCustomers(searchTerm, radioValue).catch(() => {
-      alert('Error fetching customers'); // TODO replace with better error messaging
       return [];
     });
-
-    if (searchedCustomers.length === 0) {
-      alert('No customers found with that search term.'); // TODO replace with better error messaging
-    };
 
     setCustomers(searchedCustomers);
   }, [searchTerm, radioValue]);
 
   const handleActivation = async (customer_id, active) => {
-    await updateCustomerStatus(customer_id, active).catch(() => {
-      alert('Error updating customer status'); // TODO replace with better error messaging
-    });
+    await updateCustomerStatus(customer_id, active);
     setUpdateTrigger(updateTrigger + 1);
   }
 
   // on page load handleSearch is called
   useEffect(() => {
     handleSearch();
-  }, [handleSearch, updateTrigger]);
+    if (customers.length === 0) {
+      toast.error("Problem fetching customers. Please try again later.");
+    }
+  }, [handleSearch, updateTrigger, customers.length]);
 
   const handleToggle = (value) => {
     setRadioValue(value, () => handleSearch());
