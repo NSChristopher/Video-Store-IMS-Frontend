@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ButtonGroup, ToggleButton, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getCustomers, updateCustomerStatus } from '../services/CustomerService';
-import { toast } from 'react-toastify';
 
 const Customers = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,10 +33,7 @@ const Customers = () => {
   // on page load handleSearch is called
   useEffect(() => {
     handleSearch();
-    if (customers.length === 0) {
-      toast.error("Problem fetching customers. Please try again later.");
-    }
-  }, [handleSearch, updateTrigger, customers.length]);
+  }, [handleSearch, updateTrigger]);
 
   const handleToggle = (value) => {
     setRadioValue(value, () => handleSearch());
