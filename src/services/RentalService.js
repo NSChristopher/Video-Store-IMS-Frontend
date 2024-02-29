@@ -15,3 +15,15 @@ export const createRental = (filmId, customerId, staffId = 1) => {
         throw new Error("Server connection error");   
     }
 }
+
+export const returnRental = (customer_id, rentalId) => {
+    try {
+        return axios.put(`${API_URL}customer/${customer_id}/return/`,
+            {
+                rental_id: rentalId
+            });
+    } catch (error) {
+        console.error("Failed to return rental.", error);
+        throw new Error("Server connection error");
+    }
+}
